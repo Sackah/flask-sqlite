@@ -45,4 +45,47 @@ def addrec():
 
 @app.route('/list')
 def list():
-    return render_template('list.html')
+    try:
+        conn = sqlite3.connect("students.sqlite")
+        conn.row_factory = sqlite3.Row
+
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM students") 
+
+        rows = cur.fetchall()
+        return render_template('list.html', rows=rows)
+    except Exception as e:
+        msg = "An error occured while trying to retrieve data: " + str(e)
+        return render_template("result.html", msg=msg)
+    finally:
+        conn.close()
+
+# select a specific row in the database then load an edit form 
+@app.route("/edit", methods=['GET', 'POST'])
+def edit():
+    if request.method == "POST":
+        try:
+            id = request.form["id"]
+
+            conn = sqlite3.connect("students.sqlite")
+            conn.row_factory = sqlite3.Row
+
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM students where id = ? ", id)
+
+            rows = cur.fetchall()
+            return render_template("edit.html", rows=rows)
+        except Exception as e:
+            id=None
+            msg = "An error occured while trying to retrieve data: " + str(e)
+            return render_template("result.html", msg=msg)
+        finally:
+            conn.close()
+
+@app.route('/editrec')
+def editrec():
+    return
+
+@app.route("/delete")
+def delete():
+    return

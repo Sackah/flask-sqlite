@@ -4,23 +4,28 @@
 {% endblock %}
 {% block content %}
 <h1>Edit Student Record</h1>
-    {% for row in rows %}
-    <form action="{{ url_for('editrec') }}" method="POST">
-        <h3 style="color:blue">Student ID: {{ row['rowid']}}</h3>
-        <input type="hidden" name="rowid" value="{{ row['rowid'] }}">
-        Name<br>
-        <input type="text" name="nm" value="{{ row['name'] }}"/><br>
+    {% for student in rows %}
+    <form action="{{ url_for('editrec') }}" method="post">
+        <h3 style="color:blue">Student ID: {{ student['id']}}</h3>
+        <input type="hidden" name="id" value="{{ student['id'] }}">
+        Name
+        <br>
+        <input type="text" name="nm" value="{{ student['name'] }}"/><br>
 
-        Address<br>
-        <input type="text" name="add" value="{{row['addr']}}"/><br>
+        Address
+        <br>
+        <input type="text" name="add" value="{{student['addr']}}"/><br>
 
-        City<br>
-        <input type="text" name="city" value="{{ row['city'] }}"/><br>
+        City
+        <br>
+        <input type="text" name="city" value="{{ student['city'] }}"/><br>
 
-        Zip Code<br>
-        <input type="text" name="zip" value="{{ row['zip'] }}"/><br>
+        Zip Code
+        <br>
+        <input type="text" name="zip" value="{{ student['zip'] }}"/><br>
 
-        <input type="submit" value="Submit" /><br>
+        <button type="submit">Submit</button>
+        <br>
     </form>
     {% endfor %}
 {% endblock %}
