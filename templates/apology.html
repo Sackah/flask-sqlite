@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}
+    Apology
+{% endblock %}
+{% block content %}
+    {% if message %}
+        <p class="text-apology">{{message}}</p>
+    {% endif %}
+{% endblock %}

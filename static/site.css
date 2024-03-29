@@ -25,3 +25,10 @@
     padding: 5px;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.text-apology {
+    color: darkred;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1.2rem;
+    text-align: center;
+}

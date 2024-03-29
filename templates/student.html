@@ -3,20 +3,25 @@
     Add New Student
 {% endblock %}
 {% block content %}
-        <form action="{{ url_for('addrec') }}" method="POST">
+        <form action="{{url_for('addrec')}}" method="post">
             <h3>Please Add the New Student Information:</h3>
-            Name<br>
-            <input type="text" name="nm" /><br>
+            Name
+            <br>
+            <input required type="text" name="nm" /><br>
 
-            Address<br>
-            <textarea name="add"></textarea><br>
+            Address
+            <br>
+            <textarea required name="add"></textarea><br>
 
-            City<br>
-            <input type="text" name="city" /><br>
+            City
+            <br>
+            <input required type="text" name="city" /><br>
 
-            Zip Code<br>
-            <input type="text" name="zip" /><br>
+            Zip Code
+            <br>
+            <input required type="text" name="zip" /><br>
 
-            <input type="submit" value="Submit" /><br>
+            <button type="submit">Submit</button>
+            <br>
         </form>
 {% endblock %}
