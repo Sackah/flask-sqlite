@@ -82,10 +82,49 @@ def edit():
         finally:
             conn.close()
 
-@app.route('/editrec')
+@app.route('/editrec', methods=["POST"])
 def editrec():
-    return
+    if request.method == "POST":
+        required_fields = [
+            'nm', 'city', 'add', 'zip'
+        ]
+        if not validate_required(required_fields):
+            try:
+                id = request.form["id"]
+                conn = sqlite3.connect("students.sqlite")
+                cur = conn.cursor()
 
-@app.route("/delete")
+                cur.execute("UPDATE students SET name = ?, addr = ?, city = ?, zip = ? WHERE id = ?",
+                            (
+                                request.form.get("nm"), request.form.get("add"), 
+                                request.form.get("city"), request.form.get("zip"),
+                                id
+                            )
+                            )
+                conn.commit()
+                msg = "Record updated successfully"
+            except Exception as e:
+                conn.rollback()
+                msg = "An error occured while trying to retrieve data: " + str(e)
+            finally:
+                conn.close()
+                return render_template("result.html", msg=msg)
+        else:
+            return validate_required(required_fields)
+
+@app.route("/delete", methods=['POST'])
 def delete():
-    return
+    id = request.form.get("id")
+    try:
+        with sqlite3.connect("students.sqlite") as conn:
+            cur = conn.cursor()
+            cur.execute("DELETE FROM students WHERE id = ?", id)
+            conn.commit()
+            msg = "Student deleted successfully"
+    except Exception as e:
+        conn.rollback()
+        msg = "An error occured while trying to retrieve data: " + str(e)
+    finally:
+        conn.close()
+        return render_template("result.html", msg=msg)
+
